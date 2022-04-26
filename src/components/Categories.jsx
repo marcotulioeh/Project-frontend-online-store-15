@@ -4,6 +4,7 @@ import { getCategories } from '../services/api';
 class Categories extends Component {
   constructor() {
     super();
+
     this.state = {
       allCategories: [],
       fetchDone: false,

@@ -1,12 +1,15 @@
 import React from 'react';
+import { Component } from 'react/cjs/react.development';
 
-function Home() {
-  return (
-    <label data-testid="home-initial-message" htmlFor="mainSearch">
-      Digite algum termo de pesquisa ou escolha uma categoria.
-      <input id="mainSearch" type="text" />
-    </label>
-  );
+class Home extends Component {
+  render() {
+    return (
+      <label data-testid="home-initial-message" htmlFor="mainSearch">
+        Digite algum termo de pesquisa ou escolha uma categoria.
+        <input id="mainSearch" type="text" />
+      </label>
+    );
+  }
 }
 
 export default Home;

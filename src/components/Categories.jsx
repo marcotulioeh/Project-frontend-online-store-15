@@ -22,7 +22,7 @@ class Categories extends Component {
       <ul>
         {fetchDone ? (
           allCategories.map(({ id, name }) => (
-            <li key={ id } data-testid="category">{name}</li>
+            <li key={ id } id={ id } data-testid="category">{name}</li>
           ))) : ''}
       </ul>
     );

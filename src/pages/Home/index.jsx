@@ -1,9 +1,21 @@
-import React from 'react';
-import { Component } from 'react/cjs/react.development';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Categories from '../../components/Categories';
+import { getProductsFromCategory } from '../../services/api';
 
 class Home extends Component {
+  constructor() {
+    super();
+    this.state = {
+      productsList: [],
+    };
+  }
+
+  categorieClickHandler = async ({ target }) => {
+    const data = await getProductsFromCategory(target.id);
+    this.setState({ productsList: data.results });
+  };
+
   render() {
     return (
       <>

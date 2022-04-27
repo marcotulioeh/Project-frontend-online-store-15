@@ -1,9 +1,8 @@
-import React from 'react';
-import { Component } from 'react/cjs/react.development';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Categories from '../../components/Categories';
 import Card from '../../components/Card';
-import { getProductsFromQuery } from '../../services/api';
+import { getProductsFromCategory, getProductsFromQuery } from '../../services/api';
 
 class Home extends Component {
   constructor() {
@@ -24,12 +23,17 @@ class Home extends Component {
     this.setState({ valueInput: target.value });
   };
 
+  categorieClickHandler = async ({ target }) => {
+    const data = await getProductsFromCategory(target.id);
+    this.setState({ products: data.results });
+  }
+
   render() {
     const { products, valueInput } = this.state;
 
     return (
       <>
-        <Categories />
+        <Categories clickHandler={ this.categorieClickHandler } />
         <div>
           <label data-testid="home-initial-message" htmlFor="mainSearch">
             Digite algum termo de pesquisa ou escolha uma categoria.

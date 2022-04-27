@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { saveToCartStorage } from '../services/cartManager';
 
 class Card extends React.Component {
   render() {
-    const { title, image, price } = this.props;
+    const { title, image, price, id } = this.props;
     return (
       <div data-testid="product">
         <img src={ image } alt={ title } />
@@ -13,6 +14,13 @@ class Card extends React.Component {
           {' '}
           { price }
         </p>
+        <button
+          data-testid="product-add-to-cart"
+          type="button"
+          onClick={ () => saveToCartStorage(id) }
+        >
+          Adicionar ao Carrinho
+        </button>
       </div>
     );
   }
@@ -22,6 +30,7 @@ Card.propTypes = {
   title: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export default Card;

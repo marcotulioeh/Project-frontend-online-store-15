@@ -57,8 +57,14 @@ class Home extends Component {
             <input type="button" value="cart" />
           </Link>
         </div>
-        {products.map(({ title, price, thumbnail }, key) => (
-          <Card key={ key } title={ title } price={ price } image={ thumbnail } />
+        {products.map(({ title, price, thumbnail, id }, key) => (
+          <Card
+            key={ key }
+            title={ title }
+            price={ price }
+            image={ thumbnail }
+            id={ id }
+          />
         ))}
       </>
     );

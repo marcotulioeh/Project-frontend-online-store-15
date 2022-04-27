@@ -53,7 +53,7 @@ class Home extends Component {
             Buscar
           </button>
 
-          <Link to="/shopingcart" data-testid="shopping-cart-button">
+          <Link to="/shoppingcart" data-testid="shopping-cart-button">
             <input type="button" value="cart" />
           </Link>
         </div>

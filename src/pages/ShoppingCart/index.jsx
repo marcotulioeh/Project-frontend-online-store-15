@@ -1,28 +1,50 @@
 import React, { Component } from 'react';
 import CartItem from '../../components/CartItem';
+// import { getProductFromId } from '../../services/api';
 import { getFromCartStorage } from '../../services/cartManager';
 
 export default class ShoppingCart extends Component {
   constructor() {
     super();
     this.state = {
-      cartItems: [],
+      cartItemsInfo: [],
+      // cartItems: [],
+      total: 0,
     };
   }
 
   componentDidMount() {
-    this.setState({ cartItems: getFromCartStorage() });
+    this.setState({ cartItemsInfo: getFromCartStorage() });
+  }
+
+  updateCartItemsInfo = () => {
+    this.setState({ cartItemsInfo: [] }, () => this.setState(
+      { cartItemsInfo: getFromCartStorage() },
+    ));
+  }
+
+  // fetchItems = () => {
+  //   const { cartItemsInfo } = this.state;
+  //   const { length } = cartItemsInfo;
+  // }
+
+  addValue = (value) => {
+    this.setState((previous) => ({ total: previous.total + value }));
   }
 
   render() {
-    const { cartItems } = this.state;
+    const { cartItemsInfo } = this.state;
     return (
-      cartItems.length === 0
+      cartItemsInfo.length === 0
         ? <h1 data-testid="shopping-cart-empty-message">Seu carrinho está vazio</h1>
-        : cartItems.map((item, key) => (
-          <div key={ key }>
-            <CartItem id={ item.id } quantity={ item.quantity } />
-          </div>
+        : cartItemsInfo.map((item, key) => (
+          <CartItem
+            key={ key }
+            id={ item.id }
+            quantity={ item.quantity }
+            update={ this.updateCartItemsInfo }
+            addValue={ this.addValue }
+          />
         ))
     );
   }

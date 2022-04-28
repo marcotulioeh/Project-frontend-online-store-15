@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { getProductFromId } from '../services/api';
+import { saveToCartStorage } from '../services/cartManager';
 
 class ProductPage extends Component {
   constructor() {
@@ -13,9 +15,9 @@ class ProductPage extends Component {
 
   async componentDidMount() {
     const { match: { params: { id } } } = this.props;
-    console.log(id);
+    // console.log(id);
     const product = await getProductFromId(id);
-    console.log(product);
+    // console.log(product);
     this.setState({ productInfo: product, fetchDone: true });
   }
 
@@ -26,6 +28,7 @@ class ProductPage extends Component {
       permalink,
       base_price: basePrice,
     }, fetchDone } = this.state;
+    const { match: { params: { id } } } = this.props;
     return (
       <section>
         {fetchDone ? (
@@ -39,6 +42,16 @@ class ProductPage extends Component {
               </li>
               <li><a href={ permalink }>Veja o produto</a></li>
             </ul>
+            <button
+              data-testid="product-detail-add-to-cart"
+              type="button"
+              onClick={ () => saveToCartStorage(id) }
+            >
+              Adicionar ao Carrinho
+            </button>
+            <Link to="/shopingcart" data-testid="shopping-cart-button">
+              <input type="button" value="cart" />
+            </Link>
           </>
         ) : ''}
       </section>

@@ -24,32 +24,32 @@ class ProductPage extends Component {
   render() {
     const { productInfo: {
       title,
-      pictures,
+      thumbnail,
       permalink,
-      base_price: basePrice,
+      price,
     }, fetchDone } = this.state;
     const { match: { params: { id } } } = this.props;
     return (
       <section>
         {fetchDone ? (
           <>
-            <img src={ pictures[0].url } alt={ title } />
+            <img src={ thumbnail } alt={ title } />
             <ul>
               <li data-testid="product-detail-name">{ title }</li>
               <li>
                 Valor: R$
-                { basePrice }
+                { price }
               </li>
               <li><a href={ permalink }>Veja o produto</a></li>
             </ul>
             <button
               data-testid="product-detail-add-to-cart"
               type="button"
-              onClick={ () => saveToCartStorage(id) }
+              onClick={ () => saveToCartStorage({ title, image: thumbnail, price, id }) }
             >
               Adicionar ao Carrinho
             </button>
-            <Link to="/shopingcart" data-testid="shopping-cart-button">
+            <Link to="/shoppingcart" data-testid="shopping-cart-button">
               <input type="button" value="cart" />
             </Link>
           </>

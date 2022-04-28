@@ -17,7 +17,7 @@ class Card extends React.Component {
         <button
           data-testid="product-add-to-cart"
           type="button"
-          onClick={ () => saveToCartStorage(id) }
+          onClick={ () => saveToCartStorage({ title, image, price, id }) }
         >
           Adicionar ao Carrinho
         </button>

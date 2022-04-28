@@ -11,7 +11,7 @@ export function getFromCartStorage() {
 }
 
 // Salva o id de um item no carrinho e sua quantidade
-export function saveToCartStorage(id) {
+export function saveToCartStorage({ title, image, price, id }) {
   const storage = localStorage;
   const currentCart = getFromCartStorage();
   let newCart;
@@ -20,7 +20,7 @@ export function saveToCartStorage(id) {
     newCart.find((item) => item.id === id).quantity += 1;
   } else {
     newCart = currentCart;
-    newCart.push({ id, quantity: 1 });
+    newCart.push({ title, image, price, id, quantity: 1 });
   }
   storage.setItem('cartItems', JSON.stringify(newCart));
 }

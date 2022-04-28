@@ -1,36 +1,66 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { getProductFromId } from '../services/api';
+import { changeItemQuantityInCart, removeItemFromCart } from '../services/cartManager';
 
 export default class CartItem extends Component {
-  constructor() {
-    super();
-    this.state = {
-      name: '',
-    };
+  cartItemClickHandler = ({ target: { id, value } }) => {
+    const { update } = this.props;
+    const booleanValue = value === 'true';
+    changeItemQuantityInCart(id, booleanValue);
+    update();
   }
 
-  async componentDidMount() {
-    const { id } = this.props;
-    const data = await getProductFromId(id);
-    this.setState({
-      name: data.title,
-    });
+  removeButtonHandler = ({ target: { id } }) => {
+    const { update } = this.props;
+    removeItemFromCart(id);
+    update();
   }
 
   render() {
-    const { name } = this.state;
-    const { quantity } = this.props;
+    const { title, image, price, id, quantity } = this.props;
+    const INCREASE = true;
+    const DECREASE = false;
     return (
       <div>
-        <p data-testid="shopping-cart-product-name">{name}</p>
+        <img src={ image } alt="Product" />
+        <p data-testid="shopping-cart-product-name">{title}</p>
         <p data-testid="shopping-cart-product-quantity">{quantity}</p>
+        <p>{price}</p>
+        <button
+          data-testid="product-decrease-quantity"
+          type="button"
+          id={ id }
+          value={ DECREASE }
+          onClick={ this.cartItemClickHandler }
+        >
+          -
+        </button>
+        <button
+          data-testid="product-increase-quantity"
+          type="button"
+          id={ id }
+          value={ INCREASE }
+          onClick={ this.cartItemClickHandler }
+        >
+          +
+        </button>
+        <button
+          type="button"
+          id={ id }
+          onClick={ this.removeButtonHandler }
+        >
+          Remover
+        </button>
       </div>
     );
   }
 }
 
 CartItem.propTypes = {
+  title: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
   id: PropTypes.string.isRequired,
   quantity: PropTypes.number.isRequired,
+  update: PropTypes.func.isRequired,
 };

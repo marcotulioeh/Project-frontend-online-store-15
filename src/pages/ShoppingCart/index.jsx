@@ -6,24 +6,44 @@ export default class ShoppingCart extends Component {
   constructor() {
     super();
     this.state = {
-      cartItems: [],
+      cartItemsInfo: [],
+      total: 0,
     };
   }
 
   componentDidMount() {
-    this.setState({ cartItems: getFromCartStorage() });
+    this.updateCartItemsInfo();
+  }
+
+  updateCartItemsInfo = () => {
+    this.setState({ cartItemsInfo: getFromCartStorage() }, () => {
+      this.setState((previous) => ({
+        total: previous.cartItemsInfo
+          .reduce((sum, item) => sum + (item.price * item.quantity), 0),
+      }));
+    });
   }
 
   render() {
-    const { cartItems } = this.state;
+    const { cartItemsInfo, total } = this.state;
     return (
-      cartItems.length === 0
-        ? <h1 data-testid="shopping-cart-empty-message">Seu carrinho está vazio</h1>
-        : cartItems.map((item, key) => (
-          <div key={ key }>
-            <CartItem id={ item.id } quantity={ item.quantity } />
-          </div>
-        ))
+      <>
+        {cartItemsInfo.length === 0
+          ? <h1 data-testid="shopping-cart-empty-message">Seu carrinho está vazio</h1>
+          : cartItemsInfo.map((item, key) => (
+            <CartItem
+              key={ key }
+              title={ item.title }
+              image={ item.image }
+              price={ item.price }
+              id={ item.id }
+              quantity={ item.quantity }
+              update={ this.updateCartItemsInfo }
+              addValue={ this.addValue }
+            />
+          ))}
+        <p>{total}</p>
+      </>
     );
   }
 }

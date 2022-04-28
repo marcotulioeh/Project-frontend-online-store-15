@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import CartItem from '../../components/CartItem';
-// import { getProductFromId } from '../../services/api';
 import { getFromCartStorage } from '../../services/cartManager';
 
 export default class ShoppingCart extends Component {

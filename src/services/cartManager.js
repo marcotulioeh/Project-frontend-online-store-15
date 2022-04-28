@@ -1,6 +1,6 @@
 /*
   Formato do item do carrinho:
-  [{id: string, quantity: number}, {id: number, quantity: number}]
+  [{title: string, image: string, price: number, id: string, quantity: number}]
 */
 
 // Retorna os items do carrinho no formato especificado no comentário acima
@@ -10,7 +10,7 @@ export function getFromCartStorage() {
   return cart ? JSON.parse(cart) : [];
 }
 
-// Salva o id de um item no carrinho e sua quantidade
+// Salva as infos de um item no carrinho e sua quantidade
 export function saveToCartStorage({ title, image, price, id }) {
   const storage = localStorage;
   const currentCart = getFromCartStorage();

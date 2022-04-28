@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { saveToCartStorage } from '../services/cartManager';
 
 class Card extends React.Component {
@@ -14,6 +15,13 @@ class Card extends React.Component {
           {' '}
           { price }
         </p>
+        <Link to={ `/product/${id}` } data-testid="product-detail-link">
+          <button
+            type="button"
+          >
+            Ver Produto
+          </button>
+        </Link>
         <button
           data-testid="product-add-to-cart"
           type="button"
